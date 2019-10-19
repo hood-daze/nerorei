@@ -1,0 +1,36 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+
+{% load static %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+{% endblock %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Sign up</h3>
+                        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}"
+                              novalidate>
+                            {% csrf_token %}
+                            {% include 'common/form.html' %}
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                       value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary mb-3">アカウント作成 &raquo;</button>
+                            <div class="card-footer text-muted text-center">
+                                すでにアカウントをお持ちであれば、こちらから<a href="{{ login_url }}">ログイン</a>してください。
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

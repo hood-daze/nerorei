@@ -1,0 +1,52 @@
+{% load humanize %}
+<table class="table table-bordered">
+    <tbody>
+    {% for question in question_list %}
+        <tr>
+            <td>
+                <a href="{% url 'questions:question_detail' question_pk=question.pk %}">{{ question.subject }}</a>
+                <small class="text-muted d-block">
+                    <a href="{% url 'users:profile_detail' user_pk=question.starter.id %}">
+                        <img src="{{ question.starter.icon.url }}" style="max-width: 25px;"/>
+                    </a>
+                    <a href="{% url 'users:profile_detail' user_pk=question.starter.id %}">
+                        {{ question.starter }}
+                    </a>
+                </small>
+            </td>
+            <td class="align-middle">
+                {% if question.tag1 %}
+                    <a class="badge badge-pill badge-primary"
+                       href="{% url 'tags:tag_detail' question.tag1.pk %}">
+                        <span style="color: white;">{{ question.tag1.name }}</span>
+                    </a>
+                {% endif %}
+                {% if topic.tag2 %}
+                    <a class="badge badge-pill badge-primary"
+                       href="{% url 'tags:tag_detail' question.tag2.pk %}">
+                        <span style="color: white;">{{ question.tag2.name }}</span>
+                    </a>
+                {% endif %}
+            </td>
+            <td class="align-middle">{{ question.views }}view</td>
+            {% if question.has_bestAnser %}
+                <td class="align-middle" style="color: orangered">解決済み</td>
+            {% else %}
+                <td class="align-middle" style="color: grey">回答募集中</td>
+            {% endif %}
+            {% if home_nav != 'active'%}
+                <td class="align-middle">
+                    <p>投稿</p>
+                    <small>{{ question.created_at|naturaltime }}</small>
+                </td>
+            {% else %}
+                <td class="align-middle">
+                    <p>更新</p>
+                    <small>{{ question.last_updated|naturaltime }}</small>
+                </td>
+            {% endif %}
+            <td class="align-middle">回答{{ question.get_answers_count }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

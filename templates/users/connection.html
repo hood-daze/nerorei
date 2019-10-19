@@ -1,0 +1,68 @@
+{% extends 'common/base.html' %}
+{% block title %}
+    {{ viewuser.username }}のフォロー・フォロワー一覧
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h5>{{ target_user.username }}のフォロー・フォロワー一覧</h5>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="follow-tab" data-toggle="tab" href="#follow" role="tab"
+                   aria-controls="follow" aria-selected="true">フォロー</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="follower-tab" data-toggle="tab" href="#follower" role="tab"
+                   aria-controls="follower" aria-selected="false">フォロワー</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="follow" role="tabpanel" aria-labelledby="follow-tab">
+                <table class="table">
+                    <tbody>
+                    {% for follow in target_user.follow.all %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'users:profile_detail' user_pk=follow.id %}">
+                                    <img src="{{ follow.icon.url }}" style="max-width: 25px;"/>
+                                </a>
+                                <a href="{% url 'users:profile_detail' user_pk=follow.id %}">
+                                    {{ follow.username }}
+                                </a>
+                            </td>
+                            <td>
+                                <span style="color: blue">Q:{{ follow.question_set.count }}</span>
+                                <span style="color: orangered">A:{{ follow.answer_set.count }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="follower" role="tabpanel" aria-labelledby="follower-tab">
+                <table class="table">
+                    <tbody>
+                    {% for follower in target_user.custom_user_follow.all %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'users:profile_detail' user_pk=follower.id %}">
+                                    <img src="{{ follower.icon.url }}" style="max-width: 25px;"/>
+                                </a>
+                                <a href="{% url 'users:profile_detail' user_pk=follower.id %}">
+                                    {{ follower.username }}
+                                </a>
+                            </td>
+                            <td>
+                                <span style="color: blue">Q:{{ follower.question_set.count }}</span>
+                                <span style="color: orangered">A:{{ follower.answer_set.count }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+<div class="mb-4">
+    <div class="mb-2 pb-3" style="word-wrap: break-word;">
+        {{ question.get_message_as_markdown }}
+    </div>
+    {% if question.starter == user %}
+    <form method="post" class="mb-4" novalidate>
+        {% csrf_token %}
+        <a href="{% url 'questions:question_edit' question.pk %}" class="btn btn-secondary btn-sm" role="button">編集</a>
+        <button type="submit" name="delete_question" value="{{ question.id }}" class="btn btn-danger btn-sm"
+                role="button">質問削除
+        </button>
+    </form>
+    {% endif %}
+    <hr>
+</div>

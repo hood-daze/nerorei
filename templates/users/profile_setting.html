@@ -1,0 +1,84 @@
+{% extends 'common/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    プロフィール設定
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row m-2">
+            <div class="col-lg-8">
+                <h5>プロフィール設定</h5>
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group m-2">
+                        {% if form.is_bound %}
+                            {% if form.username.errors %}
+                                {% render_field form.username class="form-control is-invalid" %}
+                                {% for error in form.username.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {% render_field form.username class="form-control is-valid" %}
+                            {% endif %}
+                        {% else %}
+                            <label>ユーザー名:</label>
+                            {% render_field form.username class="form-control" %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group m-2">
+                        {% if form.is_bound %}
+                            {% if form.icon.errors %}
+                                {% render_field form.icon class="form-control is-invalid" %}
+                                {% for error in form.icon.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {% render_field form.icon class="form-control is-valid" %}
+                            {% endif %}
+                        {% else %}
+                            <img src="{{ customuser.icon.url }}" width=40px/>
+                            <label>アイコンの変更:</label>
+                            {% render_field form.icon class="form-control" %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group m-2">
+                        {% if form.is_bound %}
+                            {% if form.description.errors %}
+                                {% render_field form.description class="form-control is-invalid" %}
+                                {% for error in form.description.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {% render_field form.description class="form-control is-valid" %}
+                            {% endif %}
+                        {% else %}
+                            <label>自己紹介:</label>
+                            {% render_field form.description class="form-control" %}
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-3">保存</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <div class="list-group m-3">
+                    <a href="{% url 'account_change_password' %}"
+                       class="list-group-item list-group-item-action">パスワード設定</a>
+                    <a href="{% url 'account_email' %}"
+                       class="list-group-item list-group-item-action">メールアドレス設定</a>
+                    <a href="{% url 'users:leave_confirm'%}"
+                       class="list-group-item list-group-item-action">退会する</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

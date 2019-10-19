@@ -1,0 +1,65 @@
+{% load widget_tweaks %}
+
+<div class="mb-5" style="margin-left:50%;">
+    <button class="btn btn-outline-secondary btn-sm" type="button" data-toggle="collapse"
+            data-target="#collapse{{ answer.id }}"
+            aria-expanded="false" aria-controls="collapseExample">
+        コメント一覧
+    </button>
+    <hr>
+    <div class="collapse" id="collapse{{ answer.id }}">
+        {% for comment in answer.comment_set.all %}
+        <div class="m-2" style="word-wrap: break-word;">
+            {{ comment.message }}
+        </div>
+        {% if comment.created_by == user %}
+        <form method="post" class="mr-2" novalidate>
+            {% csrf_token %}
+            <a href="{% url 'questions:comment_edit' answer.question.pk answer.pk comment.pk %}" class="btn btn-secondary btn-sm"
+               role="button">編集</a>
+            <button type="submit" name="delcomment" value="{{ comment.id }}" class="btn btn-danger btn-sm"
+                    role="button">コメント削除
+            </button>
+        </form>
+        {% endif %}
+        <div style="display: flex; align-items: center">
+            <div style="margin-left: auto">
+                <small class="text-muted mr-1">{{ comment.created_at }}</small>
+                <a href="{% url 'users:profile_detail' user_pk=comment.created_by.pk %}">
+                    <img class="mr-1" src="{{ comment.created_by.icon.url }}" style="width: 30px;"/>
+                </a>
+                <a href="{% url 'users:profile_detail' user_pk=comment.created_by.pk %}">
+                    <span>{{ comment.created_by.username }}</span>
+                </a>
+            </div>
+        </div>
+        <hr>
+        {% endfor %}
+
+        <form method="post" class="mb-4" novalidate>
+            {% csrf_token %}
+            <div class="form-group row m-2">
+                <div class="col-sm-12">
+                    {% if comment_form.is_bound %}
+                    {% if comment_form.message.errors %}
+                    {% render_field comment_form.message class="form-control is-invalid" placeholder="コメントをしてください" %}
+                    {% for error in comment_form.message.errors %}
+                    <div class="invalid-feedback">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    {% render_field comment_form.message class="form-control is-valid" placeholder="コメントをしてください" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field comment_form.message class="form-control" placeholder="コメントをしてください" %}
+                    {% endif %}
+                </div>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" name="comment" value="{{ answer.id }}" type="submit">
+                コメントする
+            </button>
+        </form>
+
+    </div>
+</div>

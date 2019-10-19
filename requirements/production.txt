@@ -1,0 +1,5 @@
+-r base.txt
+
+django-environ==0.4.5
+sendgrid==6.1.0
+gunicorn==19.9.0

@@ -1,0 +1,41 @@
+{% extends 'common/base.html' %}
+{% block title %}
+ランキング一覧
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h5>ランキング一覧</h5>
+    <table class="table">
+        <tbody>
+        {% for user in object_list %}
+        <tr>
+            <td class="text-center">
+                {{ forloop.counter }}
+            </td>
+            <td class="text-center">
+                <a href="{% url 'users:profile_detail' user_pk=user.id %}">
+                    <img src="{{ user.icon.url }}" style="max-width: 25px;"/>
+                </a>
+            </td>
+            <td class="text-center">
+                <a href="{% url 'users:profile_detail' user_pk=user.id %}">
+                    {{ user.username }}
+                </a>
+            </td>
+            <td class="text-center">
+                <small>Score</small>
+                <a href="{% url 'users:profile_detail' user_pk=user.id %}">
+                    {{ user.score }}
+                </a>
+            </td>
+            <td class="text-center">
+                <span style="color: blue">Q:{{ user.question_set.count }}</span>
+                <span style="color: orangered">A:{{ user.answer_set.count }}</span>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

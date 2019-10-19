@@ -1,0 +1,25 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+    退会申請
+{% endblock %}
+
+{% block content %}
+    <div class="container py-3">
+        <h3 class="py-3">退会申請</h3>
+        <div class="p-3"
+             style="background: gray;">
+            退会処理を行うと、プロフィール情報、scoreが全て削除されます。
+            質問・回答などの投稿情報は残るのでご注意をお願いします。
+        </div>
+
+        <form action="{% url 'users:leave_confirm'%}" method="post" class="mb-4 mt-4">
+            {% csrf_token %}
+            <button name="followchu" type="submit" class="btn btn-danger">
+                退会する
+            </button>
+        </form>
+
+    </div>
+
+{% endblock %}

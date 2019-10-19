@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="{% url 'home_nav' 'default' %}">ホームナビゲーション</a>
+<br>
+
+<a href="{% url 'questions:question_detail' 1 %}">質問詳細</a>
+<a href="{% url 'questions:question_input' %}">質問記入</a>
+<a href="{% url 'questions:question_edit' 1 %}">質問編集</a>
+<br>
+
+<a href="{% url 'questions:answer_input' 1 %}">答え記入</a>
+<a href="{% url 'questions:answer_edit' 1 1 %}">答え編集</a>
+<br>
+
+<a href="{% url 'tags:tag_list'%}">タグ一覧表示</a>
+<a href="{% url 'tags:tag_nav' 1 'aa'%}">タグ一ナビゲーション</a>
+<a href="{% url 'tags:tag_detail' 1%}">タグ一詳細</a>
+<br>
+
+<a href="{% url 'users:profile_setting'%}">プロフィール設定</a>
+<a href="{% url 'users:leave_confirm'%}">退会確認</a>
+
+<a href="{% url 'users:profile_detail' 1%}">ユーザ詳細</a>
+<a href="{% url 'users:profile_nav' 1 'hello'%}">ユーザナビゲーション</a>
+
+<a href="{% url 'users:connection' 1 %}">ユーザコネクション</a>
+
+<a href="{% url 'users:ranking_list' %}">ユーザランキング</a>
+<br>
+<a href="{% url 'helps:help' %}">ヘルプ</a>
+
+<br>
+<a href="{% url 'account_login' %}">ログイン</a>
+<a href="{% url 'account_logout' %}">ログアウト</a>
+
+</body>
+</html>

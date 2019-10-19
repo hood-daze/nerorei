@@ -1,0 +1,24 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}{{ question.subject }}{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    {% include 'questions/question_detail_part/jumbotron.html' %}
+</div>
+
+<div class="container">
+    {% include 'questions/question_detail_part/question.html' %}
+    <span class="my-4">回答 <span style="color: orangered;">{{ question.get_answers_count }}</span> 件</span>
+    {% for answer in question.answer_set.all %}
+    <hr>
+    {% include 'questions/question_detail_part/answer.html' %}
+    <hr>
+    {% include 'questions/question_detail_part/comment.html' %}
+    {% endfor %}
+    <div class="py-5">
+        <a href="{% url 'questions:answer_input' question.pk %}" class="btn btn-primary" role="button">回答記入へ</a>
+    </div>
+</div>
+{% endblock %}

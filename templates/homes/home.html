@@ -1,0 +1,116 @@
+{% extends 'common/base.html' %}
+{% load humanize %}
+
+{% block title %}
+質問一覧
+{% endblock %}
+
+<body>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="my-3">
+                <ul class="nav nav-tabs" id="topicTag" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link {% if home_nav == 'new' or home_nav is None %}active{% endif %}" id="new-tab"
+                           href="{% url 'home_nav' home_nav='new' %}">新着</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if home_nav == 'active' %}active{% endif %}" id="active-tab"
+                           href="{% url 'home_nav' home_nav='active' %}">アクティブ</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content mt-3" id="myTabContent">
+                    <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
+                        {% include 'homes/home_support.html' %}
+                        {% include 'common/pagination.html' %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="my-3">
+                <p style="text-align: center">全ユーザー: {{ users.count }}人</p>
+                <table class="table table-dark table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">score</th>
+                        <th class="text-center" scope="col">ランキング</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="text-center">
+                            {% if user.is_anonymous %}
+                            --
+                            {% else %}
+                            {{ user.score }}
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if user.is_anonymous %}
+                            --
+                            {% else %}
+                            {{ user_index }}位
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="my-3 p-3" style="background: lightgray">
+                    <p>Myタグ</p>
+                    <hr>
+                    <!--タグを登録していない場合とアノニマスユーザの場合。-->
+                    {% if not user.register_tag.all or user.is_anonymous%}
+                          タグを登録していません
+                    {% else %}
+                    {% for tag in user.register_tag.all %}
+                        <a class="badge badge-pill badge-primary" href="{% url 'tag_detail' tag.pk %}">
+                            <span style="color: white;">{{ tag.name }}</span>
+                        </a>
+                        {% endfor %}
+                    {% endif %}
+                    <hr>
+                    <p><a href="{% url 'tags:tag_list' %}">タグ一覧へ</a></p>
+                </div>
+
+                <div class="my-3 p-3" style="background: whitesmoke">
+                    <p>ランキング</p>
+                    <hr>
+                    <table class="table table-bordered">
+                        <tbody>
+                        {% for u in users|slice:":10" %}
+                        <tr>
+                            <td class="text-center">
+                                {{ forloop.counter }}
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'users:profile_detail' user_pk=u.id %}">
+                                    <img src="{{ u.icon.url }}" style="max-width: 25px;"/>
+                                </a>
+                                <p><a href="{% url 'users:profile_detail' user_pk=u.id %}">
+                                    {{ u.username }}
+                                </a></p>
+                            </td>
+                            <td class="text-center">
+                                <small>Score</small>
+                                <a href="{% url 'users:profile_detail' user_pk=u.id %}">
+                                    {{ u.score }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <hr>
+                    <p><a href="{% url 'users:ranking_list' %}">ランキングをもっと見る</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

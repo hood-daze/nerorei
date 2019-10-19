@@ -1,0 +1,133 @@
+{% extends 'common/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+ヘルプ
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/help.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row m-2">
+        <div class="col-lg-12">
+            <p class="m-3 h3">ヘルプ</p>
+            <div class="box-help">
+                <div class="box-help-index">
+                    <div class="box-help-index-detail">
+                        <p>neroreiについて</p>
+                        <ul>
+                            <li><a class="nav-link" href="#about-rulersugar">neroreiについて知りたい</a></li>
+                        </ul>
+                    </div>
+                    <div class="box-help-index-detail">
+                        <p>機能について</p>
+                        <ul>
+                            <li><a class="nav-link" href="#about-score">スコアについて知りたい</a></li>
+                        </ul>
+                    </div>
+                    <div class="box-help-index-detail">
+                        <p>登録情報について</p>
+                        <ul>
+                            <li><a class="nav-link" href="#forget-password">パスワードを忘れてしまった</a></li>
+                            <li><a class="nav-link" href="#want-cansel">退会したい</a></li>
+                        </ul>
+                    </div>
+                    <div class="box-help-index-detail">
+                        <p>個人情報の取り扱いについて</p>
+                        <ul>
+                            <li><a class="nav-link" href="#handle-info">個人情報の取り扱いについて知りたい</a></li>
+                        </ul>
+                    </div>
+                    <div class="box-help-index-detail">
+                        <p>その他</p>
+                        <ul>
+                            <li><a class="nav-link" href="#want-contact">お問い合わせをしたい</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="box-help-content">
+                    <div class="box-help-content-detail">
+                        <p class="content-title h4">neroreiについて</p>
+                        <p class="content-title-detail h6" id="about-rulersugar">neroreiについて知りたい</p>
+                        <p class="content-title-detail-content">
+                            neroreiは音楽に興味のある人達が集まって、質問と回答を通してお互いに知識や情報を交換・共有する場所です。<br>
+                            音楽の理論でわからないことがあるとき、DAWの設定やソフトの使い方など質問したいとき、利用してもらうことを目的としています。<br>
+                            以下の点について注意してください。
+                        </p>
+                        <ul>
+                            <li>暴言や人を傷つける言動は禁止です。</li>
+                            <li>安全のため個人情報を漏洩するような投稿はしないでください。</li>
+                            <li>曲を聴いてもらうための場ではありません。アドバイスを求めるときはよいですが、ただ感想を求めるために曲を張るのはご遠慮いただきます。</li>
+                            <li>これらが守られない場合、質問や回答、ユーザー権限を制限させていただくことがあります。あらかじめご了承ください。</li>
+                        </ul>
+                        <p class="content-title-detail-content">
+                            Rular Sugarは、PC版・モバイル版ともに会員登録・質問回答投稿をはじめ、全てのサービスを無料で提供しております。
+                        </p>
+                    </div>
+
+                    <div class="box-help-content-detail">
+                        <p class="content-title h4">機能について</p>
+                        <p class="content-title-detail h6" id="about-score">スコアについて知りたい</p>
+                        <p class="content-title-detail-content">
+                            scoreは皆さんの知識量やスキルの高さをあらわすRular Sugar独自の指標です。<br>
+                            scoreは以下のようなアクションで増減します。<br>
+                        </p>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>scoreの増減</th>
+                                <th>アクション</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>+1</td>
+                                <td>質問をする</td>
+                            </tr>
+                            <tr>
+                                <td>+2</td>
+                                <td>回答をする</td>
+                            </tr>
+                            <tr>
+                                <td>+3</td>
+                                <td>ベストアンサーに選ばれる</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="box-help-content-detail">
+                        <p class="content-title h4">登録情報について</p>
+                        <p class="content-title-detail h6" id="forget-password">パスワードを忘れてしまった</p>
+                        <p class="content-title-detail-content"><a
+                                href="{% url 'account_reset_password' %}">パスワード再設定画面</a>から登録済みメールアドレスを送信してください。入力いただいたメールアドレス宛にパスワード再設定URLをお送りします。
+                        </p>
+                        <p class="content-title-detail h6" id="want-cansel">退会したい</p>
+                        <p class="content-title-detail-content">
+                            <a href="{% url 'users:leave_confirm'%}">こちら</a>から退会のお手続きをお願いします。
+                        </p>
+                    </div>
+                    <div class="box-help-content-detail">
+                        <p class="content-title h4">個人情報の取り扱いについて</p>
+                        <p class="content-title-detail h6" id="handle-info">個人情報の取り扱いについて知りたい</p>
+                        <p class="content-title-detail-content">
+                            登録した個人情報は本サイトのみで利用され、それ以外での利用はありません。<br>
+                            退会とともに個人情報は削除されます。<br>
+                        </p>
+                    </div>
+
+                    <div class="box-help-content-detail">
+                        <p class="content-title h4">その他</p>
+                        <p class="content-title-detail h6" id="want-contact">お問い合わせしたい</p>
+                        <p class="content-title-detail-content">何かわからないことがありましたら<a
+                                href="https://twitter.com/sotasota0413">管理人Twitter</a>に連絡お願いします。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

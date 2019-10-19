@@ -1,0 +1,82 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block title %}{{ target_user.username }}のプロフィール{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="card bg-light mt-5">
+            <img class="card-img-top pt-4" src="{{ target_user.icon.url }}" alt="{{ target_user.username }}"
+                 style="width: 150px; margin: 0 auto"/>
+            <div class="card-body ">
+                <h4 class="card-title text-center">{{ target_user.username }}</h4>
+                {% if  target_user.description != None %}
+                    <p>{{ target_user.description }}</p>
+                {% endif %}
+
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-center">
+                    フォロー {{ target_user.follow.count }}　フォロワー{{ target_user.custom_user_follow.count }}
+                    <a href="{% url 'users:connection' user_pk=target_user.pk %}">　一覧へ</a>
+                </li>
+                <li class="list-group-item text-center">
+                    登録タグ<br>
+                    {% for tag in target_user.register_tag.all %}
+                        <a class="badge badge-pill badge-primary" href="{% url 'tag_detail' tag.pk %}">
+                            <span style="color: white;">{{ tag.name }}</span>
+                        </a>
+                    {% endfor %}
+                </li>
+                {% if  target_user.id == user.id %}
+                    <li class="list-group-item text-center">
+                        <a class="btn btn-secondary" href="{% url 'users:profile_setting'%}">プロフィール編集する</a>
+                    </li>
+                {% else %}
+                    {% if is_follow %}
+                        <li class="list-group-item text-center">
+                            <form method="post" class="mb-4 mt-4">
+                                {% csrf_token %}
+                                <button name="now_follow" type="submit" class="btn btn-primary">
+                                    フォロー中
+                                </button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item text-center">
+                            <form method="post" class="mb-4 mt-4">
+                                {% csrf_token %}
+                                <button name="do_follow" type="submit" class="btn btn-primary">
+                                    フォローする
+                                </button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+
+        <ul class="nav nav-tabs" id="topicTag" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link {% if profile_nav == 'question' or profile_nav is None %}active{% endif %}" id="new-tab"
+                   href="{% url 'users:profile_nav' user_pk=target_user.pk profile_nav='question' %}">質問</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if profile_nav == 'answer' %}active{% endif %}" id="active-tab"
+                   href="{% url 'users:profile_nav' user_pk=target_user.pk profile_nav='answer' %}">回答</a>
+            </li>
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
+                {% include 'homes/home_support.html' %}
+                {% include 'common/pagination.html' %}
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

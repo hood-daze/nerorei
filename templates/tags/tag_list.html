@@ -1,0 +1,28 @@
+{% extends 'common/base.html' %}
+{% block title %}
+    タグ一覧
+{% endblock %}
+
+<body>
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb my-4">
+            <li class="breadcrumb-item active">タグ一覧</li>
+        </ol>
+        {% for tag in tag_list %}
+            <div class="card mb-3" style="max-width: 100em;">
+                <div class="card-header">
+                    <a href="{% url 'tags:tag_detail' tag_pk=tag.pk %}">
+                        {{ tag.name }}
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ tag.description }}</p>
+                </div>
+                <div class="card-footer">
+                    0投稿
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

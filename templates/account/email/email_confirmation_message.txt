@@ -1,0 +1,10 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}{{ site_name }}より!
+
+ {{ user_display }}さんのアカウントとメールアドレスの認証確認をするためメールを送信しています。
+
+確認するために以下のULRをクリックしてください。
+ {{ activate_url }}
+{% endblocktrans %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}{{ site_name }}をご利用ありがとうございます!
+{{ site_domain }}{% endblocktrans %}
+{% endautoescape %}

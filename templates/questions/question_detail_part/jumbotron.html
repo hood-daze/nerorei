@@ -1,0 +1,37 @@
+<div class="container">
+    <div style="border-bottom: solid grey 1px; padding-bottom: 4px;">
+        {% for tag in question.tag.all %}
+        <a class="badge badge-pill badge-primary" href="{% url 'tags:tag_detail' tag.pk %}">
+            <span style="color: white;">{{ tag.name }}</span>
+        </a>
+        {% endfor %}
+    </div>
+    <div style="display:flex;">
+        <div style="display:flex; flex-direction: column;">
+            <h5 class="py-4">{{ question.subject }}</h5>
+            <div style="display: flex;">
+                {% if question.has_bestAnser %}
+                <p class="pr-4" style="color: orangered;">解決済み</p>
+                {% else %}
+                <p class="pr-4" style="color: gray;">受付中</p>
+                {% endif %}
+                <span class="pr-4">回答 <span style="color: orangered;">{{ question.answer.count }}</span> 件</span>
+                <span class="text-muted">投稿 {{ question.last_updated }}</span>
+            </div>
+        </div>
+
+        <div class="pr-2"
+             style="display:flex; flex-direction: column; align-items:center; margin: auto 0 auto auto; ">
+            <p>View {{ question.views }}</p>
+            <div style="display:flex; align-items: center;">
+                <a href="{% url 'users:profile_detail' user_pk=question.starter.pk %}">
+                    <img class="pr-1" src="{{ question.starter.icon.url }}" style="width: 30px;"/>
+                </a>
+                <a href="{% url 'users:profile_detail' user_pk=question.starter.pk %}">
+                    <span class="pr-1">{{ question.starter }}</span>
+                </a>
+                <small>Score {{ question.starter.score }}</small>
+            </div>
+        </div>
+    </div>
+</div>

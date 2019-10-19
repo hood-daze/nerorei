@@ -1,0 +1,39 @@
+{% extends 'common/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}回答編集{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="form-group row m-2">
+            <div class="col-sm-12">
+                <form method="post" class="mb-4" novalidate>
+                    {% csrf_token %}
+                    <label>回答編集:</label>
+                    {% if form.is_bound %}
+                        {% if form.message.errors %}
+                            {% render_field form.message class="form-control is-invalid" %}
+                            {% for error in form.message.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {% render_field form.message class="form-control is-valid" %}
+                        {% endif %}
+                    {% else %}
+                        {% render_field form.message class="form-control" %}
+                    {% endif %}
+                    <button type="submit" class="btn btn-success">変更</button>
+                    <a href="{% url 'questions:question_detail' answer.question.pk %}" class="btn btn-outline-secondary" role="button">キャンセル</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    var simplemde = new SimpleMDE();
+  </script>
+{% endblock %}

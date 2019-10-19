@@ -1,0 +1,35 @@
+.container--extend{/*homeでflexにして横に広告を持たせるため*/
+    display: flex;
+}
+
+.topic-container{
+    flex: 1;
+}
+.topic--side{
+    flex: 0.3;
+}
+
+.question-container--extend{
+    flex: 1;
+}
+.question-side--extend{
+    flex: 1;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  min-height: 100%;
+
+  /* フッタの高さと等しいネガティブマージン */
+  /* また最後の子要素の潜在的なマージンとしても機能 */
+  margin-bottom: -50px;
+}
+.footer,
+.push {
+  height: 50px;
+}

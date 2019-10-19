@@ -1,0 +1,55 @@
+<div class="m-2">
+    {% if answer.is_bestAnser %}
+    <div class="alert-danger" style="display: inline-block;" role="alert">ベストアンサー</div>
+    {% else %}
+    <div class="alert-secondary" style="display: inline-block;" role="alert">回答</div>
+    {% endif %}
+
+    <div class="m-2" style="word-wrap: break-word;">
+        {{ answer.message }}
+    </div>
+    <div style="display: flex; align-items: center">
+        <div style="margin-left: auto">
+            <small class="text-muted mr-1">{{ answer.created_at }}</small>
+            <a href="{% url 'users:profile_detail' user_pk=answer.created_by.id %}">
+                <img class="mr-1" src="{{ answer.created_by.icon.url }}" alt="{{ answer.created_by.username }}"
+                     style="width: 30px;"/>
+            </a>
+            <a href="{% url 'users:profile_detail' user_pk=answer.created_by.id %}">
+                <span>{{ answer.created_by.username }}</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="mt-1" style="display: flex; align-items: flex-start;">
+    {% if answer.created_by == user %}
+    <a href="{% url 'questions:answer_edit' question_pk=answer.question.pk answer_pk=answer.pk %}"
+       class="btn btn-secondary btn-sm mr-2" role="button">編集</a>
+    <form method="post" class="mr-2" novalidate>
+        {% csrf_token %}
+        <button type="submit" name="delete_answer" value="{{ answer.id }}" class="btn btn-danger btn-sm" role="button">
+            回答削除
+        </button>
+    </form>
+    {% endif %}
+    {% if user == question.starter %}
+    {% if not question.has_bestAnser %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="best" value="{{ answer.id }}" class="btn btn-outline-danger btn-sm">
+            ベストアンサー
+        </button>
+    </form>
+    {% endif %}
+
+    {% if answer.is_bestAnswer %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="delbest" value="{{ answer.id }}" class="btn btn-outline-danger btn-sm">
+            ベストアンサーを解除
+        </button>
+    </form>
+    {% endif %}
+    {% endif %}
+</div>

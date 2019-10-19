@@ -1,0 +1,84 @@
+{% extends 'common/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}質問編集{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <form method="post" class="mb-4" novalidate>
+            {% csrf_token %}
+            <label>質問編集:</label>
+            <div class="form-group m-2">
+                {% if form.is_bound %}
+                    {% if form.subject.errors %}
+                        {% render_field form.subject class="form-control is-invalid" placeholder="20文字以内でタイトルを入力してください。" %}
+                        {% for error in form.subject.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% render_field form.subject class="form-control is-valid" %}
+                    {% endif %}
+                {% else %}
+                    {% render_field form.subject class="form-control" placeholder="20文字以内でタイトルを入力してください。" %}
+                {% endif %}
+            </div>
+
+            <div class="form-group row m-2">
+                <div class="col-sm-6">
+                    <label>タグ1(必須)</label>
+                    {% if form.is_bound %}
+                        {% comment %}multiにしたい{% endcomment %}
+                        {% if form.tag1.errors %}
+                            {% render_field form.tag1 class="form-control is-invalid" %}
+                            {% for error in form.tag1.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {% render_field form.tag1 class="form-control is-valid" %}
+                        {% endif %}
+                    {% else %}
+                        {% render_field form.tag1 class="form-control" %}
+                    {% endif %}
+                </div>
+                <div class="col-sm-6">
+                    <label>タグ2(任意)</label>{% comment %}こっちはエラーがでないはず。{% endcomment %}
+                    {% render_field form.tag2 class="form-control" %}
+                </div>
+            </div>
+
+            <div class="form-group row m-2">
+                <div class="col-sm-12">
+                    {% if form.is_bound %}
+                        {% if form.message.errors %}
+                            {% render_field form.message class="form-control is-invalid" placeholder="4000文字以内で本文を入力してください。マークダウン記法を使うと文字が見やすくなります。" %}
+                            {% for error in form.message.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {% render_field form.message class="form-control is-valid" %}
+                        {% endif %}
+                    {% else %}
+                        {% render_field form.message class="form-control" placeholder="4000文字以内で本文を入力してください。マークダウン記法を使うと数式が見やすくなります。" %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">変更</button>
+            <a href="{% url 'questions:question_detail' object.pk %}" class="btn btn-outline-secondary"
+               role="button">キャンセル</a>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    var simplemde = new SimpleMDE();
+  </script>
+{% endblock %}
