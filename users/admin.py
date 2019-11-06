@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         # 　個人情報欄にdescriptionを追加
-        (_('Personal info'), {'fields': ('email', 'description', 'icon', 'follow', 'follower', 'register_tag')}),
+        (_('Personal info'), {'fields': ('email', 'description', 'icon',  'follow', 'register_tag')}),
 
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),

@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'widget_tweaks',
     'django_cleanup',
-    'imagekit',
     # アプリケーション
     'questions.apps.QuestionsConfig',
     'tags.apps.TagsConfig',
