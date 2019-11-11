@@ -15,17 +15,13 @@
                 </small>
             </td>
             <td class="align-middle">
-                {% if question.tag1 %}
+                {% if question.tag %}
+                {% for t in question.tag.all %}
                     <a class="badge badge-pill badge-primary"
-                       href="{% url 'tags:tag_detail' question.tag1.pk %}">
-                        <span style="color: white;">{{ question.tag1.name }}</span>
+                       href="{% url 'tags:tag_detail' t.pk %}">
+                        <span style="color: white;">{{ t.name }}</span>
                     </a>
-                {% endif %}
-                {% if topic.tag2 %}
-                    <a class="badge badge-pill badge-primary"
-                       href="{% url 'tags:tag_detail' question.tag2.pk %}">
-                        <span style="color: white;">{{ question.tag2.name }}</span>
-                    </a>
+                {% endfor %}
                 {% endif %}
             </td>
             <td class="align-middle">{{ question.views }}view</td>

@@ -14,11 +14,6 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     # タグを削除できないようにProtectと指定している。
-    tag1 = models.ForeignKey(Tag, on_delete=models.PROTECT,
-                             verbose_name='タグ1', related_name='question_tag1')
-    tag2 = models.ForeignKey(Tag, on_delete=models.SET_NULL, verbose_name='タグ2', related_name='question_tag2',
-                             null=True,
-                             blank=True)
     tag = models.ManyToManyField(Tag, related_name='question_tag', verbose_name='タグ全て', )
 
     starter = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)

@@ -22,30 +22,19 @@
                 {% render_field form.subject class="form-control" placeholder="20文字以内でタイトルを入力してください。" %}
             {% endif %}
         </div>
-
-        <div class="form-group row m-2">
-            <div class="col-sm-6">
-                <label>タグ1(必須)</label>
-                {% if form.is_bound %}
-                    {% comment %}multiにしたい{% endcomment %}
-                    {% if form.tag1.errors %}
-                        {% render_field form.tag1 class="form-control is-invalid" %}
-                        {% for error in form.tag1.errors %}
-                            <div class="invalid-feedback">
-                                {{ error }}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        {% render_field form.tag1 class="form-control is-valid" %}
-                    {% endif %}
+        <div class="form-group m-2">
+            {% if form.is_bound %}
+                {% if form.tag.errors %}
+                    {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（コード理論, Cubaseなど関連する言葉 5つまで）"%}
+                    {% for error in form.tag.errors %}
+            <p style="color:red;">{{ error }}</p>
+                    {% endfor %}
                 {% else %}
-                    {% render_field form.tag1 class="form-control" %}
+                    {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（コード理論, Cubaseなど関連する言葉 5つまで）"%}
                 {% endif %}
-            </div>
-            <div class="col-sm-6">
-                <label>タグ2(任意)</label>{% comment %}こっちはエラーがでないはず。{% endcomment %}
-                {% render_field form.tag2 class="form-control" %}
-            </div>
+            {% else %}
+           {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（コード理論, Cubaseなど関連する言葉 5つまで）"%}
+            {% endif %}
         </div>
 
         <div class="form-group row m-2">
@@ -67,12 +56,14 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-success m-2">Post</button>
+        <button type="submit" class="btn btn-success m-2">質問投稿</button>
+            {{ form.media }}
     </form>
 {% endblock %}
 
 {% block javascript %}
     <script>
         var simplemde = new SimpleMDE();
+
     </script>
 {% endblock %}

@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, UpdateView
+from django.contrib import messages
 
 from questions.forms import QuestionInputForm, CommentForm, AnswerInputForm
 from tags.models import Tag
@@ -53,20 +54,12 @@ class QuestionInput(FormView):
     form_class = QuestionInputForm
     success_url = reverse_lazy('home')
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['tags'] = Tag.objects.all()
-        return ctx
-
     def form_valid(self, form):
-        question_form = form.save(commit=False)
-        question_form.starter = self.request.user
-        question_form.save()
-        question_form.tag.add(question_form.tag1)
-        if question_form.tag2 is not None:
-            question_form.tag.add(question_form.tag2)
-        question_form.save()
-        # 投稿したら1点入れる
+        new_question = form.save(commit=False)
+        new_question.starter = self.request.user
+        new_question.save()
+        form.save_m2m()
+
         self.request.user.score += 1
         self.request.user.save()
         return super().form_valid(form)
@@ -233,3 +226,21 @@ class CommentEdit(UpdateView):
         comment.updated_at = timezone.now()
         comment.save()
         return redirect('questions:question_detail', question_pk=self.kwargs.get("question_pk"))
+
+
+def api_tags_get(request):
+    keyword = request.GET.get('keyword')
+    if keyword:
+        tag_list = [{'pk': tag.pk, 'name': str(tag)} for tag in Tag.objects.filter(name__istartswith=keyword)]
+        count = 0
+        neo_tag_list = []
+        for t in tag_list:
+            count += 1
+            neo_tag_list.append(t)
+            if count > 5:
+                break
+        tag_list = neo_tag_list
+    else:
+        tag_list = []
+    return JsonResponse({'object_list': tag_list})
+

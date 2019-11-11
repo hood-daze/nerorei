@@ -53,7 +53,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    # widget
+    'django.forms',
 ]
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'# widget
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

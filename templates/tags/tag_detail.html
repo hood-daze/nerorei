@@ -37,7 +37,7 @@
                href="{% url 'tags:tag_nav' tag_pk=tag.pk tag_nav='new' %}">新着</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if nav == 'active' %}active{% endif %}" id="active-tab"
+            <a class="nav-link {% if tag_nav  == 'active' %}active{% endif %}" id="active-tab"
                href="{% url 'tags:tag_nav' tag_pk=tag.pk tag_nav='active' %}">アクティブ</a>
         </li>
     </ul>

@@ -17,4 +17,6 @@ urlpatterns = [
 
     path('<int:question_pk>/answer/<int:answer_pk>/comment/<int:comment_pk>/edit/',
          views.CommentEdit.as_view(), name='comment_edit'),# コメント編集画面
+    # jsonでtag一覧を得るため。
+    path('api/tags/get/', views.api_tags_get, name='api_tags_get')
 ]

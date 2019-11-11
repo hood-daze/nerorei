@@ -20,7 +20,7 @@
                     <p class="card-text">{{ tag.description }}</p>
                 </div>
                 <div class="card-footer">
-                    0投稿
+                    {{ tag.question_tag.all|length }}投稿
                 </div>
             </div>
         {% endfor %}
