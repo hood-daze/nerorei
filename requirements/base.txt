@@ -16,7 +16,6 @@ mysqlclient==1.4.4
 oauthlib==3.1.0
 pilkit==2.0
 Pillow==6.2.0
-pkg-resources==0.0.0
 python-http-client==3.2.1
 python3-openid==3.1.0
 pytz==2019.2

@@ -2,7 +2,11 @@
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+{% block head_title %}{% trans "Sign Out" %} | 電子塾 【ネロレイ】{% endblock %}
+
+{% block meta %}
+<meta name="Description" content="ログアウト | 電子塾 【ネロレイ】は学習に特化したQ&amp;Aサイトです。わからない問題について質問すると、他の利用者が回答してくれます。相互に理解を深めましょう。">
+{% endblock %}
 
 {% block content %}
 <h1>{% trans "Sign Out" %}</h1>

@@ -1,7 +1,25 @@
 {% extends 'common/base.html' %}
 {% load static %}
 
-{% block title %}{{ question.subject }}{% endblock %}
+{% block title %}
+{% for tag in question.tag.all %}
+{% if forloop.first %}
+{{ tag.name }} -
+{% endif %}
+{% endfor %}
+{{ question.subject }}　| 電子塾 【ネロレイ】{% endblock %}
+{% block meta %}
+
+<link rel="canonical" href="https://nerorei.com/">
+<!--共有時-->
+<meta property="og:title" content="{{ question.subject }}　| 電子塾 【ネロレイ】">
+<meta property="og:type" content="article">
+<meta property="og:description" content="{{ question.message }}" />
+<meta property="og:url" content="https://nerorei.com/questions/{{ question.id }}/" itemprop="url"><meta property="og:image" content="{% static 'images/momiji.png' %}">
+<meta property="og:image" content="{% static 'images/momiji.png' %}">
+<meta property="og:site_name" content="電子塾 【ネロレイ】">
+<meta property="og:locale" content="ja_JP">
+{% endblock %}
 
 {% block content %}
 <div class="jumbotron">

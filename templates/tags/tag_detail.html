@@ -1,6 +1,8 @@
 {% extends 'common/base.html' %}
-{% block title %}
-{{ tag.name }}
+{% block title %}{{ tag.name }}に関する質問一覧 | 電子塾 【ネロレイ】{% endblock %}
+{% block meta %}
+<meta name="Description" content="{{ tag.name }}に関する質問一覧です。 | 電子塾 【ネロレイ】は学習に特化したQ&amp;Aサイトです。わからない問題について質問すると、他の利用者が回答してくれます。相互に理解を深めましょう。">
+<link rel="canonical" href="https://nerorei.com/tags/{{ tag.id }}/">
 {% endblock %}
 
 <body>
