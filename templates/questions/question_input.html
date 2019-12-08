@@ -28,15 +28,15 @@
         <div class="form-group m-2">
             {% if form.is_bound %}
                 {% if form.tag.errors %}
-                    {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（コード理論, Cubaseなど関連する言葉 5つまで）"%}
+                    {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（国語, 数学など関連する言葉 5つまで）"%}
                     {% for error in form.tag.errors %}
             <p style="color:red;">{{ error }}</p>
                     {% endfor %}
                 {% else %}
-                    {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（コード理論, Cubaseなど関連する言葉 5つまで）"%}
+                    {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（国語, 数学など関連する言葉 5つまで）"%}
                 {% endif %}
             {% else %}
-           {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（コード理論, Cubaseなど関連する言葉 5つまで）"%}
+           {% render_field form.tag style='width:100%' placeholder="タグを入力して候補から選択（国語, 数学など関連する言葉 5つまで）"%}
             {% endif %}
         </div>
 
@@ -67,6 +67,5 @@
 {% block javascript %}
     <script>
         var simplemde = new SimpleMDE();
-
     </script>
 {% endblock %}
